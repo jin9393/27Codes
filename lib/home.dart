@@ -24,6 +24,8 @@ class home extends StatefulWidget {
 }
 
 class _HomeState extends State<home> {
+
+  bool _isLogin = false;
   int lastClicked = 0;
   late SharedPreferences prefs;
   GlobalKey<ConvexAppBarState> _appBarKey = GlobalKey<ConvexAppBarState>();
@@ -32,6 +34,7 @@ class _HomeState extends State<home> {
   void initState() {
     super.initState();
     setState(() {
+
       // getdatafromserver();
       // print ('done d $data');
       // getdatafromserver().whenComplete(() => print ('done d $returnData'));
@@ -53,21 +56,9 @@ class _HomeState extends State<home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(child: _pages[_selectedIndex]
-          //     IndexedStack(
-          //   index: _selectedIndex,
-          //   children: _pages,
-          // )
-
-          // child: SingleChildScrollView(
-          //   child: Column(
-          //     children: [
-          //       TopBar(),
-          //       // BottomBar(),
-          //     ],
-          //   ),
-          // ),
-          ),
+      body: SafeArea(child:
+      _pages[_selectedIndex]
+      ),
       bottomNavigationBar: StyleProvider(
           style: Style(),
           child: ConvexAppBar(
@@ -118,7 +109,15 @@ class _HomeState extends State<home> {
     prefs = await SharedPreferences.getInstance();
   }
 
+  Future _getLogin() async {
+    prefs = await SharedPreferences.getInstance();
+    _isLogin = prefs.getBool(Constants.PREF_LOGIN) ?? false;
+
+    return _getLogin();
+  }
+
   Future<void> _onTap(int index) async {
+
     if(index != 2){
       lastClicked = index;
     }

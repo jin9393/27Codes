@@ -5,6 +5,7 @@ import 'package:code_27/Widget/sign_up_page.dart';
 import 'package:code_27/Widget/forget_password_page.dart';
 import 'package:code_27/Widget/api_calling.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:code_27/home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -180,7 +181,9 @@ class _LoginPageState extends State<LoginPage> {
       prefs.setString(
           Constants.PREF_PHONE, responseData.data['phone'].toString());
 
-      Navigator.pop(context, true);
+      // Navigator.pop(context, true);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => home()));
+
     } else {
       // prefs = await SharedPreferences.getInstance();
       // prefs.setBool(Constants.PREF_LOGIN, true);

@@ -203,8 +203,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                     prefs.setString(Constants.PREF_PHONE, '');
 
                                     Navigator.of(context).pop(dialogContext);
+                                    // logOut();
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
                                     setState(() {
-                                      // Navigator.of(context).pop(dialogContext);
+                                      // Navigaxtor.of(context).pop(dialogContext);
                                     });
                                   },
                                   child: Text('Yes'),
@@ -282,12 +284,12 @@ class _ProfilePageState extends State<ProfilePage> {
       prefs.setString(Constants.PREF_EMAIL, '');
       prefs.setString(Constants.PREF_PHONE, '');
 
-      Navigator.pop(context);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
     } else {
       // prefs = await SharedPreferences.getInstance();
       // prefs.setBool(Constants.PREF_LOGIN, true);
 
-      Navigator.pop(context);
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
     }
   }
 

@@ -8,6 +8,7 @@ import 'package:code_27/Widget/api_calling.dart';
 import 'package:code_27/Widget/merchant_list_item.dart';
 import 'package:code_27/Model/merchant_model.dart';
 import 'package:code_27/Utils/constants.dart';
+import 'package:code_27/Widget/login_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -630,9 +631,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<List<MerchantModel>> getdatafromserver() async {
+
     _isLoading = true;
     prefs = await SharedPreferences.getInstance();
     lists = [];
+
+    name = prefs.getString(Constants.PREF_NAME) ?? '';
+    _isLogin = prefs.getBool(Constants.PREF_LOGIN) ?? false;
 
     Map<String, String> requestHeaders = {
       'deviceid':
@@ -667,8 +672,7 @@ class _HomePageState extends State<HomePage> {
       print('error');
     }
 
-    name = prefs.getString(Constants.PREF_NAME) ?? '';
-    _isLogin = prefs.getBool(Constants.PREF_LOGIN) ?? false;
+
 
     print(name);
     print(_isLogin);
