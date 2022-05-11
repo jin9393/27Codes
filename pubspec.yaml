@@ -84,6 +84,7 @@ flutter_icons:
   image_path_ios: "assets/images/appicon2.jpg"
   android: true
   ios: true
+  remove_alpha_ios: true
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -93,7 +94,7 @@ flutter_icons:
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
-  # For details regarding adding assets from package dependencies, see
+  # For details regarding adding assets from package dependencies, seeye
   # https://flutter.dev/assets-and-images/#from-packages
 
   # To add custom fonts to your application, add a fonts section here,
