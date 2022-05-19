@@ -9,6 +9,8 @@ import 'package:code_27/Widget/merchant_list_item.dart';
 import 'package:code_27/Model/merchant_model.dart';
 import 'package:code_27/Utils/constants.dart';
 import 'package:code_27/Widget/login_page.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,6 +19,10 @@ class HomePage extends StatefulWidget {
 // TopBar();
 
 class _HomePageState extends State<HomePage> {
+  List<String> imgList = [];
+
+  int _current = 0;
+  final CarouselController _carouselController = CarouselController();
   late Future<List<MerchantModel>> _tasks;
   List<MerchantModel> lists = [];
   late SharedPreferences prefs;
@@ -211,111 +217,175 @@ class _HomePageState extends State<HomePage> {
                       height: 20.h,
                     ),
                     Container(
-                        padding: EdgeInsets.all(10),
-                        width: 0.9.sw,
-                        height: 400.h,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(14)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
+                      padding: EdgeInsets.all(10),
+                      width: 0.9.sw,
+                      height: 400.h,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(14)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: CarouselSlider(
+                        options: CarouselOptions(
+                          height: 360.h,
+                          autoPlay: true,
                         ),
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                      'assets/images/car_stock_1.jpg',
-                                    ),
-                                    fit: BoxFit.cover),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(14)),
-                              ),
-                              margin: EdgeInsets.symmetric(horizontal: 20.w),
-                              width: 360.w,
-                              height: 360.h,
+                        items: [
+                          Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/images/car_stock_1.jpg',
+                                  ),
+                                  fit: BoxFit.cover),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(14)),
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                      'assets/images/car_stock_2.jpg',
-                                    ),
-                                    fit: BoxFit.cover),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(14)),
-                              ),
-                              margin: EdgeInsets.symmetric(horizontal: 20.w),
-                              width: 360.w,
-                              height: 360.h,
+                            margin: EdgeInsets.symmetric(horizontal: 20.w),
+                            width: 360.w,
+                            height: 360.h,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/images/car_stock_2.jpg',
+                                  ),
+                                  fit: BoxFit.cover),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(14)),
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                      'assets/images/car_stock_4.jpg',
-                                    ),
-                                    fit: BoxFit.cover),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(14)),
-                              ),
-                              margin: EdgeInsets.symmetric(horizontal: 20.w),
-                              width: 360.w,
-                              height: 360.h,
+                            margin: EdgeInsets.symmetric(horizontal: 20.w),
+                            width: 360.w,
+                            height: 360.h,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/images/car_stock_4.jpg',
+                                  ),
+                                  fit: BoxFit.cover),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(14)),
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                      'assets/images/car_stock_5.jpg',
-                                    ),
-                                    fit: BoxFit.cover),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(14)),
-                              ),
-                              margin: EdgeInsets.symmetric(horizontal: 20.w),
-                              width: 360.w,
-                              height: 360.h,
+                            margin: EdgeInsets.symmetric(horizontal: 20.w),
+                            width: 360.w,
+                            height: 360.h,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/images/car_stock_5.jpg',
+                                  ),
+                                  fit: BoxFit.cover),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(14)),
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                      'assets/images/car_stock_6.jpg',
-                                    ),
-                                    fit: BoxFit.cover),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(14)),
-                              ),
-                              margin: EdgeInsets.symmetric(horizontal: 20.w),
-                              width: 360.w,
-                              height: 360.h,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                      'assets/images/car_stock_7.jpg',
-                                    ),
-                                    fit: BoxFit.cover),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(14)),
-                              ),
-                              margin: EdgeInsets.symmetric(horizontal: 20.w),
-                              width: 360.w,
-                              height: 360.h,
-                            ),
-                          ],
-                        )),
+                            margin: EdgeInsets.symmetric(horizontal: 20.w),
+                            width: 360.w,
+                            height: 360.h,
+                          ),
+                        ],
+                      ),
+                      // child: ListView(
+                      //   scrollDirection: Axis.horizontal,
+                      //   children: [
+                      //     Container(
+                      //       decoration: BoxDecoration(
+                      //         image: DecorationImage(
+                      //             image: AssetImage(
+                      //               'assets/images/car_stock_1.jpg',
+                      //             ),
+                      //             fit: BoxFit.cover),
+                      //         borderRadius:
+                      //             BorderRadius.all(Radius.circular(14)),
+                      //       ),
+                      //       margin: EdgeInsets.symmetric(horizontal: 20.w),
+                      //       width: 360.w,
+                      //       height: 360.h,
+                      //     ),
+                      //     Container(
+                      //       decoration: BoxDecoration(
+                      //         image: DecorationImage(
+                      //             image: AssetImage(
+                      //               'assets/images/car_stock_2.jpg',
+                      //             ),
+                      //             fit: BoxFit.cover),
+                      //         borderRadius:
+                      //             BorderRadius.all(Radius.circular(14)),
+                      //       ),
+                      //       margin: EdgeInsets.symmetric(horizontal: 20.w),
+                      //       width: 360.w,
+                      //       height: 360.h,
+                      //     ),
+                      //     Container(
+                      //       decoration: BoxDecoration(
+                      //         image: DecorationImage(
+                      //             image: AssetImage(
+                      //               'assets/images/car_stock_4.jpg',
+                      //             ),
+                      //             fit: BoxFit.cover),
+                      //         borderRadius:
+                      //             BorderRadius.all(Radius.circular(14)),
+                      //       ),
+                      //       margin: EdgeInsets.symmetric(horizontal: 20.w),
+                      //       width: 360.w,
+                      //       height: 360.h,
+                      //     ),
+                      //     Container(
+                      //       decoration: BoxDecoration(
+                      //         image: DecorationImage(
+                      //             image: AssetImage(
+                      //               'assets/images/car_stock_5.jpg',
+                      //             ),
+                      //             fit: BoxFit.cover),
+                      //         borderRadius:
+                      //             BorderRadius.all(Radius.circular(14)),
+                      //       ),
+                      //       margin: EdgeInsets.symmetric(horizontal: 20.w),
+                      //       width: 360.w,
+                      //       height: 360.h,
+                      //     ),
+                      //     Container(
+                      //       decoration: BoxDecoration(
+                      //         image: DecorationImage(
+                      //             image: AssetImage(
+                      //               'assets/images/car_stock_6.jpg',
+                      //             ),
+                      //             fit: BoxFit.cover),
+                      //         borderRadius:
+                      //             BorderRadius.all(Radius.circular(14)),
+                      //       ),
+                      //       margin: EdgeInsets.symmetric(horizontal: 20.w),
+                      //       width: 360.w,
+                      //       height: 360.h,
+                      //     ),
+                      //     Container(
+                      //       decoration: BoxDecoration(
+                      //         image: DecorationImage(
+                      //             image: AssetImage(
+                      //               'assets/images/car_stock_7.jpg',
+                      //             ),
+                      //             fit: BoxFit.cover),
+                      //         borderRadius:
+                      //             BorderRadius.all(Radius.circular(14)),
+                      //       ),
+                      //       margin: EdgeInsets.symmetric(horizontal: 20.w),
+                      //       width: 360.w,
+                      //       height: 360.h,
+                      //     ),
+                      //   ],
+                      // )
+                    ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
@@ -445,18 +515,17 @@ class _HomePageState extends State<HomePage> {
                                                 child: GestureDetector(
                                                     child: Image.asset(
                                                   'assets/images/appicon_27thcoin.png',
-                                                  width: 55.w,
-                                                  height: 55.h,
+                                                  width: 70.w,
+                                                  height: 70.h,
                                                 )),
                                                 margin:
                                                     EdgeInsets.only(right: 5)),
                                             Container(
                                               child: Text(
                                                 "0",
-                                                style: TextStyle(
-                                                    color: Colors.grey),
+                                                style: TextStyle(color: Colors.blueAccent, fontSize: 46.sp),
                                               ),
-                                              margin: EdgeInsets.only(right: 8),
+                                              margin: EdgeInsets.only(right: 40.w),
                                               alignment: Alignment.centerRight,
                                             ),
                                           ],
@@ -485,110 +554,78 @@ class _HomePageState extends State<HomePage> {
                     height: 20.h,
                   ),
                   Container(
-                      padding: EdgeInsets.all(10),
-                      width: 0.9.sw,
-                      height: 400.h,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(14)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                    'assets/images/car_stock_1.jpg',
-                                  ),
-                                  fit: BoxFit.cover),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(14)),
-                            ),
-                            margin: EdgeInsets.symmetric(horizontal: 20.w),
-                            width: 360.w,
-                            height: 360.h,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                    'assets/images/car_stock_2.jpg',
-                                  ),
-                                  fit: BoxFit.cover),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(14)),
-                            ),
-                            margin: EdgeInsets.symmetric(horizontal: 20.w),
-                            width: 360.w,
-                            height: 360.h,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                    'assets/images/car_stock_4.jpg',
-                                  ),
-                                  fit: BoxFit.cover),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(14)),
-                            ),
-                            margin: EdgeInsets.symmetric(horizontal: 20.w),
-                            width: 360.w,
-                            height: 360.h,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                    'assets/images/car_stock_5.jpg',
-                                  ),
-                                  fit: BoxFit.cover),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(14)),
-                            ),
-                            margin: EdgeInsets.symmetric(horizontal: 20.w),
-                            width: 360.w,
-                            height: 360.h,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                    'assets/images/car_stock_6.jpg',
-                                  ),
-                                  fit: BoxFit.cover),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(14)),
-                            ),
-                            margin: EdgeInsets.symmetric(horizontal: 20.w),
-                            width: 360.w,
-                            height: 360.h,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                    'assets/images/car_stock_7.jpg',
-                                  ),
-                                  fit: BoxFit.cover),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(14)),
-                            ),
-                            margin: EdgeInsets.symmetric(horizontal: 20.w),
-                            width: 360.w,
-                            height: 360.h,
-                          ),
-                        ],
-                      )),
+                    padding: EdgeInsets.all(10),
+                    width: 0.95.sw,
+                    height: 460.h,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(14)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        CarouselSlider(
+                          carouselController: _carouselController,
+                          options: CarouselOptions(
+                              height: 355.h,
+                              autoPlay: true,
+                              autoPlayInterval: Duration(seconds: 10),
+                              viewportFraction: 1,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  _current = index;
+                                });
+                              }
+                              // enlargeCenterPage: true,
+                              ),
+                          items: imgList
+                              .map((item) => Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(14)),
+                                    ),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: CachedNetworkImage(
+                                            imageUrl: item,
+                                            fit: BoxFit.cover,
+                                            width: 1.sw)),
+                                  ))
+                              .toList(),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: imgList.asMap().entries.map((entry) {
+                            return GestureDetector(
+                              onTap: () =>
+                                  _carouselController.animateToPage(entry.key),
+                              child: Container(
+                                width: 16.w,
+                                height: 16.h,
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 14.h, horizontal: 4.0),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: (Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? Colors.white
+                                            : Colors.grey)
+                                        .withOpacity(
+                                            _current == entry.key ? 0.9 : 0.4)),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
@@ -631,7 +668,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<List<MerchantModel>> getdatafromserver() async {
-
     _isLoading = true;
     prefs = await SharedPreferences.getInstance();
     lists = [];
@@ -640,24 +676,23 @@ class _HomePageState extends State<HomePage> {
     _isLogin = prefs.getBool(Constants.PREF_LOGIN) ?? false;
 
     Map<String, String> requestHeaders = {
-      'deviceid':
-          'fxxYlHr9QNGnr-0W_3eifh:APA91bFWMiy8rRWPEZESx_1tfHhvmIrcqBEKuakLPoRt4tAAP9wiJCLFuXOJsST9dp3hNJ_h8iuwJWDDWAilRaBYW8gF-DmWI1C4vB89ux9Q-ThbG_Elp7qzxpZ_sh-tOJAkFK62KBOR'
     };
 
-    var hmmm = await ApiCall().get(
+    var returnData = await ApiCall().get(
         arg: requestHeaders,
         method: Constants.NETWORK_GET_VENDOR_LIST,
         header: requestHeaders);
 
     List<Merchant> merchants = [];
 
-    if (hmmm.code == 200) {
+    if (returnData.code == 200) {
       print('asdf=   hmmm.data');
-      print(hmmm.data['sections']);
+      print(returnData.data['sections']);
 
-      hmmm.data['sections'].forEach((mer) {
+      returnData.data['sections'].forEach((mer) {
         mer['restorants'].forEach((res) {
           lists.add(MerchantModel.fromJson(res));
+          imgList.add(res['picture']);
         });
         merchants.add(Merchant.fromJson(mer, lists));
       });
@@ -665,17 +700,11 @@ class _HomePageState extends State<HomePage> {
       _isError = false;
       // Iterable l = json.decode(hmmm.data['sections']['restorants']);
       // List<MerchantModel> posts =
-      print(merchants);
     } else {
       _isLoading = false;
       _isError = true;
       print('error');
     }
-
-
-
-    print(name);
-    print(_isLogin);
 
     return lists;
   }

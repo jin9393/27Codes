@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "642119233779",
+    "project_id": "th-codes",
+    "storage_bucket": "th-codes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642119233779:android:0fb0ee0262943318f24786",
+        "android_client_info": {
+          "package_name": "com.madx.code_27"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642119233779-pj93r2ursuuhkv4gtcah0h9eiot5iad8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7FeqllDkO6ocjmeMA5hVQrymRcDM-YNs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642119233779-pj93r2ursuuhkv4gtcah0h9eiot5iad8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

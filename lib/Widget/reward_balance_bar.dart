@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RewardsBalanceBar extends StatelessWidget {
-
   late String accPoints;
 
   RewardsBalanceBar({required this.accPoints});
@@ -20,7 +19,7 @@ class RewardsBalanceBar extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              margin: EdgeInsets.only(left: 10),
+              margin: EdgeInsets.only(left: 40.w),
               child: Text(
                 "Current Balance: ",
                 style: TextStyle(fontSize: 40.sp),
@@ -32,19 +31,21 @@ class RewardsBalanceBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                      child: GestureDetector(
-                          child: Image.asset(
-                            'assets/images/appicon_27thcoin.png',
-                            width: 25,
-                            height: 25,
-                          )),
-                      margin: EdgeInsets.only(right: 5)),
+                    child: GestureDetector(
+                        child: Image.asset(
+                      'assets/images/appicon_27thcoin.png',
+                      width: 70.w,
+                      height: 70.h,
+                    )),
+                    margin: EdgeInsets.only(right: 20.w),
+                  ),
                   Container(
                     child: Text(
                       accPoints,
-                      style: TextStyle(color: Colors.blueAccent),
+                      style:
+                          TextStyle(color: Colors.blueAccent, fontSize: 46.sp),
                     ),
-                    margin: EdgeInsets.only(right: 8),
+                    margin: EdgeInsets.only(right: 40.w),
                     alignment: Alignment.centerRight,
                   ),
                 ],

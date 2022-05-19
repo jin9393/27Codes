@@ -71,39 +71,43 @@ class MerchantListItem extends StatelessWidget {
                       data.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.black, fontSize: 14),
+                      style: TextStyle(color: Colors.blue.shade400, fontSize: 45.sp),
                     ),
+                        SizedBox(height: 5.h,),
                     Text(
                       data.address,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 30.sp,
+                          color: Colors.black
                       ),
                     ),
 
-                    RatingBar.builder(
-                      ignoreGestures: true,
-                      itemSize: 13,
-                      initialRating: 3,
-                      minRating: 1,
-                      direction: Axis.horizontal,
-                      allowHalfRating: false,
-                      itemCount: 5,
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      onRatingUpdate: (rating) {
-                        print(rating);
-                      },
-                    ),
+                    // RatingBar.builder(
+                    //   ignoreGestures: true,
+                    //   itemSize: 13,
+                    //   initialRating: 3,
+                    //   minRating: 1,
+                    //   direction: Axis.horizontal,
+                    //   allowHalfRating: false,
+                    //   itemCount: 5,
+                    //   itemBuilder: (context, _) => Icon(
+                    //     Icons.star,
+                    //     color: Colors.amber,
+                    //   ),
+                    //   onRatingUpdate: (rating) {
+                    //     print(rating);
+                    //   },
+                    // ),
+                        SizedBox(height: 5.h,),
                         Text(
-                          "(100 reviews)",
-                          maxLines: 1,
+                          data.description,
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: 10,
+                            fontSize: 30.sp,
+                            color: Colors.grey.shade700
                           ),
                         ),
                   ])),

@@ -614,10 +614,6 @@ class _MerchantDetailsState extends State<MerchantDetailsPage> {
     if (!_isLoading) {
       _isLoading = true;
       Map<String, String> requestHeaders = {
-        'deviceid':
-            'fxxYlHr9QNGnr-0W_3eifh:APA91bFWMiy8rRWPEZESx_1tfHhvmIrcqBEKuakLPoRt4tAAP9wiJCLFuXOJsST9dp3hNJ_h8iuwJWDDWAilRaBYW8gF-DmWI1C4vB89ux9Q-ThbG_Elp7qzxpZ_sh-tOJAkFK62KBOR',
-        'appkey': 'fUPvZAmZnIArSZl9TauXbtVyTJHEaik6gju4qWDU',
-        'Authorization': 'Bearer'
       };
 
       var responseData = await ApiCall().get(

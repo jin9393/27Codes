@@ -17,6 +17,7 @@ class _RewardsPageState extends State<RewardsPage> {
   String accPoints = '0';
   bool _isLoading = false;
   bool _isLogin = false;
+  bool _isEmpty = false;
   late Future<List<RewardModel>> _tasks;
   List<RewardModel> lists = [];
   late SharedPreferences prefs;
@@ -150,8 +151,12 @@ class _RewardsPageState extends State<RewardsPage> {
                                   margin: EdgeInsets.only(top: 400.h),
                                   child: CircularProgressIndicator(),
                                 )
-                              : _isLogin
+                              : _isEmpty
                                   ? Container(
+                                      margin: EdgeInsets.only(top: 0.5.sh),
+                                      child: Text("No rewards at the moment"),
+                                    )
+                                  : Container(
                                       margin: EdgeInsets.only(top: 400.h),
                                       child: ListView.builder(
                                         physics: NeverScrollableScrollPhysics(),
@@ -165,11 +170,6 @@ class _RewardsPageState extends State<RewardsPage> {
                                           );
                                         },
                                       ),
-                                    )
-                                  : Container(
-                                      margin: EdgeInsets.only(top: 0.5.sh),
-                                      child:
-                                          Text("Please login to view reward."),
                                     )
                         ],
                       ),
@@ -192,12 +192,7 @@ class _RewardsPageState extends State<RewardsPage> {
     _isLogin = prefs.getBool(Constants.PREF_LOGIN) ?? false;
 
     if (_isLogin) {
-      Map<String, String> requestHeaders = {
-        'deviceid':
-            'cBxBBYu4Qvuklp4ySaPQcx:APA91bFiVRvYNQ3Zpuwmh1I_8d62DRkKWHVwABtZsfs5s92FKRNramHL8rueCUvm4de5J_cO3-fFGZGuAWd72-_EZaqI9HsI7UDWeZL--yZ9uutwGeKQHbPJkvtlfqiS6upVJFIxjKJJ',
-        'Authorization':
-            'Bearer 32NcrJEk25jxLELHtIMhfZ3esWIf4KEIevqTDepVLfYCRrG7tIhfmh9pWiWzBhgx6nvIVNGj7St8PJJP'
-      };
+      Map<String, String> requestHeaders = {};
 
       Map<String, String> arg = {};
 
@@ -210,21 +205,24 @@ class _RewardsPageState extends State<RewardsPage> {
       List<RewardModel> rewards = [];
       print(responseData);
       if (responseData.code == 200) {
+        _isLoading = false;
+        print('testing123');
         responseData.data['reward_list'].forEach((res) {
           lists.add(RewardModel.fromJson(res));
         });
-        accPoints = responseData.data['current'];
-        print(rewards);
+        accPoints = responseData.data['current'].toString();
+        if (lists.length == 0) {
+          _isEmpty = true;
+        } else {
+          _isEmpty = false;
+        }
       } else {
         print('error');
       }
-      print(lists.length);
 
       setState(() {
         lists = lists;
       });
-
-      _isLoading = false;
     } else {
       setState(() {
         lists = lists;

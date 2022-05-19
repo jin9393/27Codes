@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:io' as Platform;
 
 class MerchantToolbarItem extends StatelessWidget {
   late String data;
@@ -75,7 +76,9 @@ class MerchantToolbarItem extends StatelessWidget {
   }
 
   void _openMap(double lat, double lng) async {
+
     var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
+
     if (await canLaunch(uri.toString())) {
       await launch(uri.toString());
     } else {

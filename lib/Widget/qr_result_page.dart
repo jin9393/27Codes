@@ -256,9 +256,9 @@ class _QrResultPageState extends State<QrResultPage> {
                               setState(() {
                                 showLoaderDialog(context);
                                 if(_paymentType == PaymentType.cashPayment){
-                                  submitPayment('32NcrJEk25jxLELHtIMhfZ3esWIf4KEIevqTDepVLfYCRrG7tIhfmh9pWiWzBhgx6nvIVNGj7St8PJJP','add_point');
+                                  submitPayment('add_point');
                                 }else{
-                                  submitPayment('32NcrJEk25jxLELHtIMhfZ3esWIf4KEIevqTDepVLfYCRrG7tIhfmh9pWiWzBhgx6nvIVNGj7St8PJJP','deduct_point');
+                                  submitPayment('deduct_point');
                                 }
                               });
 
@@ -293,13 +293,11 @@ class _QrResultPageState extends State<QrResultPage> {
     );
   }
 
-  submitPayment(String token, String paymentType) async{
+  submitPayment(String paymentType) async{
     _isLoading = true;
 
     Map<String, String> requestHeaders = {
-      'deviceid':
-      'cBxBBYu4Qvuklp4ySaPQcx:APA91bFiVRvYNQ3Zpuwmh1I_8d62DRkKWHVwABtZsfs5s92FKRNramHL8rueCUvm4de5J_cO3-fFGZGuAWd72-_EZaqI9HsI7UDWeZL--yZ9uutwGeKQHbPJkvtlfqiS6upVJFIxjKJJ',
-      'Authorization': 'Bearer $token'
+
     };
 
     Map<String, String> arg = {
@@ -330,9 +328,7 @@ class _QrResultPageState extends State<QrResultPage> {
 
 
     Map<String, String> requestHeaders = {
-      'deviceid':
-      'cBxBBYu4Qvuklp4ySaPQcx:APA91bFiVRvYNQ3Zpuwmh1I_8d62DRkKWHVwABtZsfs5s92FKRNramHL8rueCUvm4de5J_cO3-fFGZGuAWd72-_EZaqI9HsI7UDWeZL--yZ9uutwGeKQHbPJkvtlfqiS6upVJFIxjKJJ',
-      'Authorization': 'Bearer $token'
+
     };
 
     var responseData = await ApiCall().get(

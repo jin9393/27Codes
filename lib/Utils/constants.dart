@@ -6,6 +6,7 @@ class Constants {
   static const String PREF_ID = "id";
   static const String PREF_NAME = "name";
   static const String PREF_TOKEN = "token";
+  static const String PREF_DEVICE_ID = "deviceid";
   static const String PREF_EMAIL = "email";
   static const String PREF_PHONE = "phone";
 
@@ -17,8 +18,10 @@ class Constants {
   static const String NETWORK_GET_USER_DATA = "auth/userdata";
   static const String NETWORK_GET_VENDOR_LIST = "vendor/list?";
   static const String NETWORK_STORE_POINT = "orders/storepoint";
+  static const String NETWORK_STORE_BOOKING = "orders/storebooking";
   static const String NETWORK_FORGET_PASSWORD = "auth/forgotpassword";
   static const String NETWORK_CHANGE_PASSWORD = "auth/changepassword";
+  static const String NETWORK_UPDATE_PROFILE = "auth/updateprofile";
   static const String NETWORK_CHECKOUT_CART = "vendor/checkoutcart";
 
   static const String ERROR_MSG_ENTER_EMAIL = "Please enter email";

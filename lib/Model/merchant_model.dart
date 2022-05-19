@@ -27,6 +27,7 @@ class MerchantModel extends Equatable  {
   final String lng;
   final String address;
   final String phone;
+  final String description;
 
   MerchantModel({
     id,
@@ -36,16 +37,18 @@ class MerchantModel extends Equatable  {
     lng,
     address,
     phone,
+    description,
 }) : id = id ?? '',
   name = name ?? '',
   picture = picture ?? '',
   lat = lat ?? '',
   lng = lng ?? '',
   address = address ?? '',
+        description = description ?? '',
         phone = phone ?? '';
 
   @override
-  List<Object?> get props => [id, name, picture, lat, lng,address,phone];
+  List<Object?> get props => [id, name, picture, lat, lng,address,phone,description];
 
   static MerchantModel fromJson(Map<String, dynamic> json) => MerchantModel(
     id: json['id'].toString(),
@@ -55,6 +58,7 @@ class MerchantModel extends Equatable  {
     lng: json['lng'].toString(),
     address: json['address'].toString(),
     phone: json['phone'].toString(),
+    description: json['description'].toString(),
   );
 
   Map<String, dynamic> toJson() =>
@@ -66,5 +70,6 @@ class MerchantModel extends Equatable  {
         'lng': lng,
         'address': address,
         'phone': phone,
+        'description': description,
       };
 }

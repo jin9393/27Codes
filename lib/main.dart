@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Utils/constants.dart';
 import 'Widget/login_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 // void main() {
 //   runApp(
 //     MyApp(
@@ -12,8 +14,14 @@ import 'Widget/login_page.dart';
 //   );
 // }
 
-Future<void> main() async {
+Future initFireBase() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
+}
+
+Future<void> main() async {
+
+  await initFireBase();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLogin = prefs.getBool(Constants.PREF_LOGIN) ?? false;
 

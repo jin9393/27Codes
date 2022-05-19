@@ -17,7 +17,6 @@ class ApiCall {
   Future<RestApiResult> get({
     required String method,
     String token = '',
-    // String token = '32NcrJEk25jxLELHtIMhfZ3esWIf4KEIevqTDepVLfYCRrG7tIhfmh9pWiWzBhgx6nvIVNGj7St8PJJP',
     Map<String, String> arg = const {},
     Map<String, String> header = const {},
   }) async {
@@ -34,6 +33,7 @@ class ApiCall {
   }
 
   Future<RestApiResult> _call({
+
     required String method,
     String token = '',
     Map<String, String> arg = const {},
@@ -41,12 +41,15 @@ class ApiCall {
     required String getOrPost,
   }) async {
     // final prefs = await SharedPreferences.getInstance();
-
     prefs = await SharedPreferences.getInstance();
     String token = prefs.getString(Constants.PREF_TOKEN) ?? '';
+    if(!header.keys.contains('deviceid')){
+      String deviceid = prefs.getString(Constants.PREF_DEVICE_ID) ?? '';
+      header['deviceid'] = deviceid;
+    }
     header['appkey'] = 'fUPvZAmZnIArSZl9TauXbtVyTJHEaik6gju4qWDU';
     header['Accept'] = 'application/json';
-    // header['Authorization'] = 'Bearer $token';
+    header['Authorization'] = 'Bearer $token';
     String url = "$baseUrl/$method";
     // String url = "$baseUrl";
     print(arg);

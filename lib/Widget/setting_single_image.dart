@@ -11,12 +11,17 @@ class SettingSingleImage extends StatelessWidget {
   var nextPage;
   late double widthSize;
 
-  SettingSingleImage({required this.data, required this.image, required this.nextPage, required this.widthSize});
+  SettingSingleImage(
+      {required this.data,
+      required this.image,
+      required this.nextPage,
+      required this.widthSize});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder:  (_) => nextPage)),
+      onTap: () => Navigator.of(context)
+          .push(MaterialPageRoute(builder: (_) => nextPage)),
       child: Container(
         width: widthSize,
         decoration: BoxDecoration(
@@ -28,16 +33,19 @@ class SettingSingleImage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(width: 12.w),
             Container(
-              margin: EdgeInsets.all(5),
+              padding: EdgeInsets.all(5),
               child: Image.asset(
-              image,
-              width: 100.w,
-              height: 100.h,
-            ),),
-            SizedBox(width: 12),
+                image,
+                width: 90.w,
+                height: 90.h,
+              ),
+            ),
+            SizedBox(width: 20.w),
             Flexible(
-              child: Text(data,
+              child: Text(
+                data,
                 style: TextStyle(
                   fontSize: 45.sp,
                   color: Colors.grey,

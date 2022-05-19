@@ -28,6 +28,12 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
   String password = '';
   String passwordConfirmation = '';
 
+  bool _amountChecking = false;
+  bool _specialChecking = false;
+  bool _numberChecking = false;
+  bool _capsChecking = false;
+  bool _passwordMatching = false;
+
   @override
   void initState() {
     super.initState();
@@ -163,6 +169,9 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
                                 },
                               ),
                             ),
+                            onChanged: (text) {
+                              checkForPassword(text);
+                            },
                           ),
                         ),
                       ),
@@ -191,6 +200,9 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
                                 },
                               ),
                             ),
+                            onChanged: (text) {
+                              checkSimilarity(text);
+                            },
                           ),
                         ),
                       ),
@@ -210,23 +222,56 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
                       SizedBox(
                         height: 60.h,
                       ),
-                      PasswordConditionText(
-                        title: 'At least 8 characters',
-                        imageAsset: 'assets/images/appicon_greendot-01.png',
-                      ),
-                      PasswordConditionText(
-                        title: 'At least 1 upper case',
-                        imageAsset: 'assets/images/appicon_greendot-01.png',
-                      ),
-                      PasswordConditionText(
-                        title: 'At least 1 number',
-                        imageAsset: 'assets/images/appicon_greendot-01.png',
-                      ),
-                      PasswordConditionText(
-                        title:
-                            'Confirm password & new password does not match.',
-                        imageAsset: 'assets/images/appicon_reddot-01.png',
-                      ),
+                      _amountChecking
+                          ? PasswordConditionText(
+                              title: 'At least 8 characters',
+                              imageAsset:
+                                  'assets/images/appicon_greendot-01.png',
+                            )
+                          : PasswordConditionText(
+                              title: 'At least 8 characters',
+                              imageAsset: 'assets/images/appicon_reddot-01.png',
+                            ),
+                      _capsChecking
+                          ? PasswordConditionText(
+                              title: 'At least 1 upper case',
+                              imageAsset:
+                                  'assets/images/appicon_greendot-01.png',
+                            )
+                          : PasswordConditionText(
+                              title: 'At least 1 upper case',
+                              imageAsset: 'assets/images/appicon_reddot-01.png',
+                            ),
+                      _numberChecking
+                          ? PasswordConditionText(
+                              title: 'At least 1 number',
+                              imageAsset:
+                                  'assets/images/appicon_greendot-01.png',
+                            )
+                          : PasswordConditionText(
+                              title: 'At least 1 number',
+                              imageAsset: 'assets/images/appicon_reddot-01.png',
+                            ),
+                      _specialChecking
+                          ? PasswordConditionText(
+                              title: 'At least 1 special character',
+                              imageAsset:
+                                  'assets/images/appicon_greendot-01.png',
+                            )
+                          : PasswordConditionText(
+                              title: 'At least 1 special character',
+                              imageAsset: 'assets/images/appicon_reddot-01.png',
+                            ),
+                      _passwordMatching
+                          ? PasswordConditionText(
+                              title: 'New password & confirm password match.',
+                              imageAsset:
+                                  'assets/images/appicon_greendot-01.png',
+                            )
+                          : PasswordConditionText(
+                              title: 'New password & confirm password match.',
+                              imageAsset: 'assets/images/appicon_reddot-01.png',
+                            ),
                       SizedBox(
                         height: 60.h,
                       ),
@@ -242,24 +287,29 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
                       passwordConfirmation =
                           passwordConfirmationController.value.text;
 
-                      print(oldPassword);
-                      print(password);
-                      print(passwordConfirmation);
-
                       if (oldPassword.length == 0) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
                               "Please make sure old password is not empty."),
                         ));
                       } else {
-                        if (password == passwordConfirmation) {
-                          // changePassword();
-                          print('Change password');
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+
+                        if (!_specialChecking ||
+                            !_numberChecking ||
+                            !_capsChecking ||
+                            !_amountChecking) {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text(
+                                "Please make sure password meet requirement."),
+                          ));
+                        } else if (password != passwordConfirmation) {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                             content: Text(
                                 "Please make sure both new password match."),
                           ));
+                        } else {
+                          print('inside change');
+                          changePassword();
                         }
                       }
                     },
@@ -290,13 +340,54 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
     ));
   }
 
+  checkForPassword(String password) {
+    print(password);
+
+    RegExp capsRegex = RegExp(r'^(?=.*?[A-Z])');
+    RegExp specialRegex = RegExp(r'^(?=.*?[!@#\-?/+$&*~])');
+    RegExp numRegex = RegExp(r'^(?=.*?[0-9])');
+    RegExp amountRegex = RegExp(r'^.{8,}');
+
+    if (!capsRegex.hasMatch(password)) {
+      _capsChecking = false;
+    } else {
+      _capsChecking = true;
+    }
+
+    if (!specialRegex.hasMatch(password)) {
+      _specialChecking = false;
+    } else {
+      _specialChecking = true;
+    }
+    if (!numRegex.hasMatch(password)) {
+      _numberChecking = false;
+    } else {
+      _numberChecking = true;
+    }
+    if (!amountRegex.hasMatch(password)) {
+      _amountChecking = false;
+    } else {
+      _amountChecking = true;
+    }
+
+    setState(() {});
+  }
+
+  checkSimilarity(String confirmPass) {
+    String getNewPassword = passwordController.value.text;
+
+    if (getNewPassword == confirmPass) {
+      _passwordMatching = true;
+    } else {
+      _passwordMatching = false;
+    }
+    setState(() {});
+  }
+
   changePassword() async {
     _loading = true;
 
-    Map<String, String> requestHeaders = {
-      'deviceid':
-          'cBxBBYu4Qvuklp4ySaPQcx:APA91bFiVRvYNQ3Zpuwmh1I_8d62DRkKWHVwABtZsfs5s92FKRNramHL8rueCUvm4de5J_cO3-fFGZGuAWd72-_EZaqI9HsI7UDWeZL--yZ9uutwGeKQHbPJkvtlfqiS6upVJFIxjKJJ'
-    };
+    Map<String, String> requestHeaders = {};
 
     Map<String, String> requestBody = {
       'old_password': oldPassword,
@@ -304,16 +395,22 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
       'password_confirmation': passwordConfirmation,
     };
 
-    var hmmm = await ApiCall().post(
+    var responseData = await ApiCall().post(
         arg: requestBody,
-        method: Constants.NETWORK_LOGIN,
+        method: Constants.NETWORK_CHANGE_PASSWORD,
         header: requestHeaders);
-    print(hmmm.message);
-    print(hmmm);
-    if (hmmm.code == 200) {
+    print(responseData.message);
+    print(responseData);
+    if (responseData.code == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(responseData.message),
+      ));
       Navigator.pop(context);
     } else {
-      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(responseData.message),
+      ));
+      // Navigator.pop(context);
     }
   }
 }

@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:code_27/Utils/constants.dart';
 import 'package:code_27/Widget/api_calling.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -64,21 +65,23 @@ class _ProfilePageState extends State<ProfilePage> {
                         SizedBox(height: 40.h),
                         GestureDetector(
                           onTap: () {
-                            getProfilePicture();
+                            // getProfilePicture();
                           },
                           child: Container(
-                              width: 380.w,
-                              height: 380.h,
-                              child: CircleAvatar(
-                                radius: 10,
-                                backgroundImage: AssetImage(
-                                    'assets/images/appicon_profile_highres.png'),
-                              )),
+                            width: 380.w,
+                            height: 380.h,
+                            child: CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Colors.white,
+                              backgroundImage: AssetImage(
+                                  'assets/images/appicon_profile_highres.png'),
+                            ),
+                          ),
                         ),
                         Container(
                           child: Text(name,
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18)),
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 68.sp)),
                           margin: EdgeInsets.only(top: 10.h),
                         ),
                       ],
@@ -90,21 +93,71 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          SettingSingleImage(
-                            data: "Profile",
-                            image: 'assets/images/appicon_profile.png',
-                            nextPage: ProfileDetailsPage(
-                              name: name,
-                              phone: phoneNumber,
-                              email: email,
+                          GestureDetector(
+                            onTap: () =>
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //     builder: (_) => ProfileDetailsPage(
+                                //           name: name,
+                                //           phone: phoneNumber,
+                                //           email: email,
+                                //         ))),
+                            Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ProfileDetailsPage(name: name,phone: phoneNumber,email: email,)),)
+                                .then((val)=>val?updateName():null),
+                            child: Container(
+                              width: 0.40.sw,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              // margin: EdgeInsets.all(6),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(width: 12.w),
+                                  Container(
+                                    padding: EdgeInsets.all(5),
+                                    child: Image.asset(
+                                      'assets/images/appicon_profile.png',
+                                      width: 90.w,
+                                      height: 90.h,
+                                    ),
+                                  ),
+                                  SizedBox(width: 20.w),
+                                  Flexible(
+                                    child: Text(
+                                      'Profile',
+                                      style: TextStyle(
+                                        fontSize: 45.sp,
+                                        color: Colors.grey,
+                                      ),
+                                      softWrap: true,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.visible,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            widthSize: 0.35.sw,
+                          ),
+                          // SettingSingleImage(
+                          //   data: "Profile",
+                          //   image: 'assets/images/appicon_profile.png',
+                          //   nextPage: ProfileDetailsPage(
+                          //     name: name,
+                          //     phone: phoneNumber,
+                          //     email: email,
+                          //   ),
+                          //   widthSize: 0.40.sw,
+                          // ),
+                          SizedBox(
+                            width: 0.1.sw,
                           ),
                           SettingSingleImage(
                             data: "Change Password",
                             image: 'assets/images/appicon_changePassword.png',
                             nextPage: ChangePasswordPage(),
-                            widthSize: 0.45.sw,
+                            widthSize: 0.40.sw,
                           ),
                         ],
                       ),
@@ -134,7 +187,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         phone: phoneNumber,
                         email: email,
                       ),
-                      onTap: () => refresh('1'),
+                      onTap: () => refresh('about us'),
                     ),
                     SettingSingleImageVertical(
                       data: "Terms of Use",
@@ -144,7 +197,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         phone: phoneNumber,
                         email: email,
                       ),
-                      onTap: () => refresh('2'),
+                      onTap: () => refresh('termsofuse'),
                     ),
                     SettingSingleImageVertical(
                       data: "Privacy Policy",
@@ -154,7 +207,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         phone: phoneNumber,
                         email: email,
                       ),
-                      onTap: () => refresh('3'),
+                      onTap: () => refresh('privacypolicy'),
                     ),
                   ],
                 ),
@@ -194,7 +247,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                     prefs =
                                         await SharedPreferences.getInstance();
 
-                                    prefs = await SharedPreferences.getInstance();
+                                    prefs =
+                                        await SharedPreferences.getInstance();
                                     prefs.setBool(Constants.PREF_LOGIN, false);
                                     prefs.setString(Constants.PREF_TOKEN, '');
                                     prefs.setString(Constants.PREF_ID, '');
@@ -204,7 +258,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
                                     Navigator.of(context).pop(dialogContext);
                                     // logOut();
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                LoginPage()));
                                     setState(() {
                                       // Navigaxtor.of(context).pop(dialogContext);
                                     });
@@ -246,6 +304,17 @@ class _ProfilePageState extends State<ProfilePage> {
     print(path);
   }
 
+  updateName() async{
+    prefs = await SharedPreferences.getInstance();
+    name = prefs.getString(Constants.PREF_NAME) ?? '';
+    String token = prefs.getString(Constants.PREF_TOKEN) ?? '';
+    email = prefs.getString(Constants.PREF_EMAIL) ?? '';
+    phoneNumber = prefs.getString(Constants.PREF_PHONE) ?? '';
+    setState(() {
+
+    });
+  }
+
   getName() async {
     prefs = await SharedPreferences.getInstance();
     name = prefs.getString(Constants.PREF_NAME) ?? '';
@@ -284,7 +353,8 @@ class _ProfilePageState extends State<ProfilePage> {
       prefs.setString(Constants.PREF_EMAIL, '');
       prefs.setString(Constants.PREF_PHONE, '');
 
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
     } else {
       // prefs = await SharedPreferences.getInstance();
       // prefs.setBool(Constants.PREF_LOGIN, true);
@@ -294,7 +364,22 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   refresh(String selected) {
-    if (selected == '5') {}
+    if (selected == 'about us') {
+      _launchUrl('https://developing27code.madxpanel.com/pages/2');
+    }else if(selected == 'termsofuse'){
+      _launchUrl('https://developing27code.madxpanel.com/pages/1');
+    }else if(selected == 'privacypolicy'){
+      _launchUrl('https://developing27code.madxpanel.com/pages/3');
+    }else{
+      _launchUrl('https://developing27code.madxpanel.com');
+    }
     // setState(() {});
+  }
+  void _launchUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'There was a problem to open the url: $url';
+    }
   }
 }

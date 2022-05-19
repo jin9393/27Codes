@@ -6,6 +6,8 @@ import 'package:code_27/Widget/forget_password_page.dart';
 import 'package:code_27/Widget/api_calling.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:code_27/home.dart';
+import 'dart:io';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -16,8 +18,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   String email = '';
+  String finalToken = '';
   String password = '';
-
+  double emptyHeight = 1.sh;
   bool _loading = false;
   late SharedPreferences prefs;
 
@@ -29,12 +32,22 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    getToken();
+    Future.delayed(Duration(seconds: 3)).then((value) => setState(() {
+          print('inside leh');
+          emptyHeight = 0.0;
+        }));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => true,
-      child: SafeArea(
-        child: Scaffold(
-          body: Padding(
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
             padding: const EdgeInsets.all(10),
             child: SingleChildScrollView(
               physics: ScrollPhysics(),
@@ -69,16 +82,31 @@ class _LoginPageState extends State<LoginPage> {
                         'Sign in',
                         style: TextStyle(fontSize: 20),
                       )),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    child: TextField(
-                      controller: nameController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'User Name',
-                      ),
-                    ),
+
+                  AnimatedContainer(
+                    duration: Duration(seconds: 1),
+                    height: emptyHeight,
                   ),
+                  Stack(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        child: TextField(
+                          controller: nameController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'User Name',
+                          ),
+                        ),
+                      ),
+                      _loading
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : Container(),
+                    ],
+                  ),
+
                   Container(
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                     child: TextField(
@@ -149,13 +177,21 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  login() async {
-    _loading = true;
+  getToken(){
+    FirebaseMessaging.instance.getToken().then((token) {
+      print('This is Token: ' '${token}');
+      finalToken = token.toString();
+      print('testing');
+      print(finalToken);
+    });
+  }
 
-    Map<String, String> requestHeaders = {
-      'deviceid':
-          'cBxBBYu4Qvuklp4ySaPQcx:APA91bFiVRvYNQ3Zpuwmh1I_8d62DRkKWHVwABtZsfs5s92FKRNramHL8rueCUvm4de5J_cO3-fFGZGuAWd72-_EZaqI9HsI7UDWeZL--yZ9uutwGeKQHbPJkvtlfqiS6upVJFIxjKJJ'
-    };
+  login() async {
+    setState(() {
+      _loading = true;
+    });
+
+    Map<String, String> requestHeaders = {'deviceid': finalToken};
 
     Map<String, String> requestBody = {
       'email': email,
@@ -174,6 +210,7 @@ class _LoginPageState extends State<LoginPage> {
 
       prefs = await SharedPreferences.getInstance();
       prefs.setBool(Constants.PREF_LOGIN, true);
+      prefs.setString(Constants.PREF_DEVICE_ID, finalToken);
       prefs.setString(Constants.PREF_TOKEN, responseData.data['token']);
       prefs.setString(Constants.PREF_ID, responseData.data['id'].toString());
       prefs.setString(Constants.PREF_EMAIL, responseData.data['email']);
@@ -182,12 +219,19 @@ class _LoginPageState extends State<LoginPage> {
           Constants.PREF_PHONE, responseData.data['phone'].toString());
 
       // Navigator.pop(context, true);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => home()));
-
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (BuildContext context) => home()));
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(responseData.message),
+      ));
       // prefs = await SharedPreferences.getInstance();
       // prefs.setBool(Constants.PREF_LOGIN, true);
       // Navigator.pop(context);
     }
+
+    setState(() {
+      _loading = false;
+    });
   }
 }

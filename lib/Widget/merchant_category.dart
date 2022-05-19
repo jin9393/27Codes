@@ -4,9 +4,11 @@ import 'package:code_27/Widget/merchant_category_grid.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MerchantCategory extends StatelessWidget {
-  const MerchantCategory({
-    Key? key,
-  }) : super(key: key);
+
+  String selected;
+  final void Function() onTap;
+
+  MerchantCategory({required this.selected,required this.onTap,});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class MerchantCategory extends StatelessWidget {
                     image: 'assets/images/appicon_f&b.png',
                     maxLine: 1,
                     fSize: 12,
+                    onTap: () => search('fnb'),
                   ),
                   VerticalDivider(
                     width: 4,
@@ -37,6 +40,7 @@ class MerchantCategory extends StatelessWidget {
                     image: 'assets/images/appicon_auto.png',
                     maxLine: 1,
                     fSize: 12,
+                    onTap: () => search('auto'),
                   ),
                   VerticalDivider(
                     width: 4,
@@ -47,6 +51,7 @@ class MerchantCategory extends StatelessWidget {
                     image: 'assets/images/appicon_wellness.png',
                     maxLine: 1,
                     fSize: 12,
+                    onTap: () => search('wellness'),
                   ),
                   VerticalDivider(
                     width: 4,
@@ -57,6 +62,7 @@ class MerchantCategory extends StatelessWidget {
                     image: 'assets/images/appicon_leisure.png',
                     maxLine: 1,
                     fSize: 12,
+                    onTap: () => search('leisure'),
                   ),
                   VerticalDivider(
                     width: 4,
@@ -67,6 +73,7 @@ class MerchantCategory extends StatelessWidget {
                     image: 'assets/images/appicon_fashion.png',
                     maxLine: 1,
                     fSize: 12,
+                    onTap: () => search('fashion'),
                   ),
                 ],
               ),
@@ -80,6 +87,7 @@ class MerchantCategory extends StatelessWidget {
                     image: 'assets/images/appicon_IT-2.png',
                     maxLine: 1,
                     fSize: 12,
+                    onTap: () => search('it'),
                   ),
                   VerticalDivider(
                     width: 4,
@@ -90,6 +98,7 @@ class MerchantCategory extends StatelessWidget {
                     image: 'assets/images/appicon_grocery.png',
                     maxLine: 1,
                     fSize: 12,
+                    onTap: () => search('grocery'),
                   ),
                   VerticalDivider(
                     width: 4,
@@ -100,6 +109,7 @@ class MerchantCategory extends StatelessWidget {
                     image: 'assets/images/appicon_stall.png',
                     maxLine: 1,
                     fSize: 12,
+                    onTap: () => search('stalls'),
                   ),
                   VerticalDivider(
                     width: 4,
@@ -110,6 +120,7 @@ class MerchantCategory extends StatelessWidget {
                     image: 'assets/images/appicon_services.png',
                     maxLine: 1,
                     fSize: 12,
+                    onTap: () => search('service'),
                   ),
                   VerticalDivider(
                     width: 4,
@@ -120,6 +131,7 @@ class MerchantCategory extends StatelessWidget {
                     image: 'assets/images/appicon_others.png',
                     maxLine: 1,
                     fSize: 12,
+                    onTap: () => search('other'),
                   ),
                 ],
               ),
@@ -128,5 +140,11 @@ class MerchantCategory extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  search(String sel) async {
+    selected = sel;
+    print(sel);
+    onTap();
   }
 }

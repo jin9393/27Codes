@@ -89,7 +89,7 @@ class _MerchantBookingPageState extends State<MerchantBookingPage> {
       print(widget.desc);
     });
 
-    if(widget.photo.isNotEmpty){
+    if (widget.photo.isNotEmpty) {
       _isPriceEmpty = true;
     }
     // setState(() {
@@ -274,8 +274,7 @@ class _MerchantBookingPageState extends State<MerchantBookingPage> {
                     Expanded(child: Container()),
                     _days == BookingTime.today
                         ? Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20.w),
+                            padding: EdgeInsets.symmetric(horizontal: 20.w),
                             decoration: BoxDecoration(
                               border: Border.all(
                                 color: Colors.blue.shade200,
@@ -288,11 +287,17 @@ class _MerchantBookingPageState extends State<MerchantBookingPage> {
                               underline: SizedBox(),
                               dropdownColor: Colors.blue.shade200,
                               value: dropdownValue,
-                              hint: Text('Select time',style: TextStyle(color: Colors.white),),
+                              hint: Text(
+                                'Select time',
+                                style: TextStyle(color: Colors.white),
+                              ),
                               items: listBookingTime.map((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
-                                  child: Text(value,style: TextStyle(color: Colors.white),),
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 );
                               }).toList(),
                               onChanged: (String? newValue) {
@@ -401,13 +406,11 @@ class _MerchantBookingPageState extends State<MerchantBookingPage> {
                                       formattedDate =
                                           DateFormat('yyyy-MM-dd').format(date);
                                     });
-                                    print('change $date');
                                   }, onConfirm: (date) {
                                     setState(() {
                                       formattedDate =
                                           DateFormat('yyyy-MM-dd').format(date);
                                     });
-                                    print('confirm $date');
                                   },
                                       currentTime: DateTime.now(),
                                       locale: LocaleType.en);
@@ -433,25 +436,30 @@ class _MerchantBookingPageState extends State<MerchantBookingPage> {
                             width: 30.w,
                           ),
                           Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20.w),
+                            padding: EdgeInsets.symmetric(horizontal: 20.w),
                             decoration: BoxDecoration(
                               border: Border.all(
                                 color: Colors.blue.shade200,
                               ),
                               borderRadius:
-                              BorderRadius.all(Radius.circular(10)),
+                                  BorderRadius.all(Radius.circular(10)),
                               color: Colors.blue.shade200,
                             ),
                             child: DropdownButton<String>(
                               underline: SizedBox(),
                               dropdownColor: Colors.blue.shade200,
                               value: dropdownValue,
-                              hint: Text('Select time',style: TextStyle(color: Colors.white),),
+                              hint: Text(
+                                'Select time',
+                                style: TextStyle(color: Colors.white),
+                              ),
                               items: listBookingTime.map((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
-                                  child: Text(value,style: TextStyle(color: Colors.white),),
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 );
                               }).toList(),
                               onChanged: (String? newValue) {
@@ -535,20 +543,13 @@ class _MerchantBookingPageState extends State<MerchantBookingPage> {
               TextButton(
                   onPressed: () {
                     submitBooking();
-                    print(widget.merchantId);
-                    print(widget.itemId);
-                    print(formattedTime);
-                    print(formattedDate);
-                    print(_itemCount);
-                    print(_remarkController.value.text);
                   },
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.blue.shade200,
                       ),
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(10)),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
                       color: Colors.blue.shade200,
                     ),
                     padding:
@@ -566,27 +567,16 @@ class _MerchantBookingPageState extends State<MerchantBookingPage> {
   }
 
   submitBooking() async {
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _isLogin = prefs.getBool(Constants.PREF_LOGIN) ?? false;
 
-    if(!_isLogin){
+    if (!_isLogin) {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (_) => LoginPage()));
-    }else{
+    } else {
       String token = prefs.getString(Constants.PREF_TOKEN) ?? '';
 
-      print(widget.merchantId);
-      print(widget.itemId);
-      print(formattedTime);
-      print(formattedDate);
-      print(_itemCount);
-      print(_remarkController.value.text);
-
       Map<String, String> requestHeaders = {
-        'deviceid':
-        'cBxBBYu4Qvuklp4ySaPQcx:APA91bFiVRvYNQ3Zpuwmh1I_8d62DRkKWHVwABtZsfs5s92FKRNramHL8rueCUvm4de5J_cO3-fFGZGuAWd72-_EZaqI9HsI7UDWeZL--yZ9uutwGeKQHbPJkvtlfqiS6upVJFIxjKJJ',
-        'Authorization': 'Bearer $token'
       };
 
       Map<String, String> arg = {
@@ -596,22 +586,37 @@ class _MerchantBookingPageState extends State<MerchantBookingPage> {
       };
 
       if (_days == BookingTime.today) {
-        arg['timeslot'] = dropdownValue;
+        arg['book_time'] = dropdownValue;
+        arg['book_date'] = formattedDate;
       } else {
-        arg['timeslot'] = dropdownValue;
-        arg['preorder_date'] = formattedDate;
+        arg['book_time'] = dropdownValue;
+        arg['book_date'] = formattedDate;
       }
+
+      arg['item_id'] = widget.itemId;
+      arg['quantity'] = _itemCount.toString();
+      arg['restorant_id'] = widget.merchantId;
+      arg['item_id'] = widget.itemId;
       arg['remark'] = _remarkController.value.text;
 
       var responseData = await ApiCall().post(
           arg: arg,
-          method: Constants.NETWORK_CHECKOUT_CART,
+          method: Constants.NETWORK_STORE_BOOKING,
           header: requestHeaders);
 
       print(responseData);
 
+      if (responseData.code == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(responseData.message),
+        ));
+        Navigator.pop(context);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(responseData.message),
+        ));
+      }
     }
-
   }
 
   showLoaderDialog(BuildContext context) {
