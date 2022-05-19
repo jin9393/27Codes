@@ -22,7 +22,6 @@ class SearchInput extends StatelessWidget {
             controller: textController,
             onSubmitted: (value){
               searchStr = value;
-              print(searchStr);
             },
             onChanged: (value){
               searchStr = value;
@@ -34,7 +33,6 @@ class SearchInput extends StatelessWidget {
               fillColor: Colors.white,
               prefixIcon: IconButton(
                 onPressed: (){
-                  print(searchStr);
                   onTap();
                 },
                 icon: Icon(Icons.search_rounded),

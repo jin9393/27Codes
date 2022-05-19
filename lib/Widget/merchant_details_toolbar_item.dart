@@ -28,7 +28,6 @@ class MerchantToolbarItem extends StatelessWidget {
               _openMap(double.parse(merchantModel.lat),
                   double.parse(merchantModel.lng));
             } else if (data == 'Social Media') {
-              print('clicked?');
               onTap();
               // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               //   content: Text("Social Media clicked"),

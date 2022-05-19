@@ -144,7 +144,6 @@ class MerchantCategory extends StatelessWidget {
 
   search(String sel) async {
     selected = sel;
-    print(sel);
     onTap();
   }
 }

@@ -86,7 +86,6 @@ class _MerchantBookingPageState extends State<MerchantBookingPage> {
     setState(() {
       getCurrentDate();
       getCurrentTime();
-      print(widget.desc);
     });
 
     if (widget.photo.isNotEmpty) {
@@ -602,9 +601,9 @@ class _MerchantBookingPageState extends State<MerchantBookingPage> {
       var responseData = await ApiCall().post(
           arg: arg,
           method: Constants.NETWORK_STORE_BOOKING,
-          header: requestHeaders);
+          header: requestHeaders,
+          context: context);
 
-      print(responseData);
 
       if (responseData.code == 200) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -49,18 +49,12 @@ class _ProfileDetailsState extends State<ProfileDetailsPage> {
 
   removeNumber(String number){
 
-    print('insideRemove');
-
     String getInitials(String bank_account_name) => bank_account_name.isNotEmpty
         ? bank_account_name.trim().split(' ').map((l) => l[0]).take(2).join()
         : '';
-    print('number');
-    print(getInitials(number));
     if(getInitials(number)=='0'){
-      print('inside');
       number = number.substring(1);
     }
-    print(number);
     return number;
   }
 
@@ -197,10 +191,6 @@ class _ProfileDetailsState extends State<ProfileDetailsPage> {
                         fullName = nameController.value.text;
                         email = emailController.value.text;
 
-                        print(fullName);
-                        print(email);
-                        print(phoneNo);
-
                         updateProfile();
                       },
                       style: ElevatedButton.styleFrom(
@@ -235,7 +225,6 @@ class _ProfileDetailsState extends State<ProfileDetailsPage> {
       };
 
       if(phoneNo.length==0){
-        print('inside');
         phoneNo = phoneController.value.text;
       }
 
@@ -248,9 +237,8 @@ class _ProfileDetailsState extends State<ProfileDetailsPage> {
       var returnData = await ApiCall().post(
           arg: bodyArg,
           method: Constants.NETWORK_UPDATE_PROFILE,
-          header: requestHeaders);
-
-      print(returnData);
+          header: requestHeaders,
+          context: context);
 
       if (returnData.code == 200) {
         prefs = await SharedPreferences.getInstance();
@@ -266,7 +254,6 @@ class _ProfileDetailsState extends State<ProfileDetailsPage> {
         Navigator.pop(context,true);
       } else {
         _isLoading = false;
-        print('error');
       }
 
       _isLoading = false;
@@ -274,7 +261,6 @@ class _ProfileDetailsState extends State<ProfileDetailsPage> {
   }
 
   getProfilePicture() async {
-    print('clicked');
 
     final ImagePicker _picker = ImagePicker();
     // Pick an image
@@ -288,22 +274,17 @@ class _ProfileDetailsState extends State<ProfileDetailsPage> {
     // // Pick multiple images
     // final List<XFile>? images = await _picker.pickMultiImage();
     String path = image!.path;
-    print(path);
   }
 
   addNumber(String number){
 
-    print('insideAdd');
 
     String getInitials(String bank_account_name) => bank_account_name.isNotEmpty
         ? bank_account_name.trim().split(' ').map((l) => l[0]).take(2).join()
         : '';
-    print('number');
-    print(getInitials(number));
     if(getInitials(number)!='0'){
       number = '0'+number;
     }
-    print(number);
     return number;
   }
 

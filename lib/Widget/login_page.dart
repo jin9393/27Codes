@@ -36,7 +36,6 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     getToken();
     Future.delayed(Duration(seconds: 3)).then((value) => setState(() {
-          print('inside leh');
           emptyHeight = 0.0;
         }));
   }
@@ -140,8 +139,6 @@ class _LoginPageState extends State<LoginPage> {
                             password = passwordController.value.text;
                             login();
                             // Navigator.pop(context);
-                            // print(nameController.text);
-                            // print(passwordController.text);
                           } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
@@ -179,10 +176,7 @@ class _LoginPageState extends State<LoginPage> {
 
   getToken(){
     FirebaseMessaging.instance.getToken().then((token) {
-      print('This is Token: ' '${token}');
       finalToken = token.toString();
-      print('testing');
-      print(finalToken);
     });
   }
 
@@ -201,12 +195,9 @@ class _LoginPageState extends State<LoginPage> {
     var responseData = await ApiCall().post(
         arg: requestBody,
         method: Constants.NETWORK_LOGIN,
-        header: requestHeaders);
-    print(responseData.message);
-    print(responseData);
+        header: requestHeaders,
+        context: context);
     if (responseData.code == 200) {
-      print('token');
-      print(responseData.data['token']);
 
       prefs = await SharedPreferences.getInstance();
       prefs.setBool(Constants.PREF_LOGIN, true);

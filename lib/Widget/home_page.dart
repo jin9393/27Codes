@@ -681,13 +681,12 @@ class _HomePageState extends State<HomePage> {
     var returnData = await ApiCall().get(
         arg: requestHeaders,
         method: Constants.NETWORK_GET_VENDOR_LIST,
-        header: requestHeaders);
+        header: requestHeaders,
+        context: context);
 
     List<Merchant> merchants = [];
 
     if (returnData.code == 200) {
-      print('asdf=   hmmm.data');
-      print(returnData.data['sections']);
 
       returnData.data['sections'].forEach((mer) {
         mer['restorants'].forEach((res) {
@@ -703,7 +702,6 @@ class _HomePageState extends State<HomePage> {
     } else {
       _isLoading = false;
       _isError = true;
-      print('error');
     }
 
     return lists;

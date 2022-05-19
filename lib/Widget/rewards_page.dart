@@ -199,14 +199,14 @@ class _RewardsPageState extends State<RewardsPage> {
       var responseData = await ApiCall().get(
           arg: arg,
           method: Constants.NETWORK_GET_REWARD,
-          header: requestHeaders);
+          header: requestHeaders,
+          context: context);
 
       lists = [];
       List<RewardModel> rewards = [];
       print(responseData);
       if (responseData.code == 200) {
         _isLoading = false;
-        print('testing123');
         responseData.data['reward_list'].forEach((res) {
           lists.add(RewardModel.fromJson(res));
         });
@@ -217,7 +217,6 @@ class _RewardsPageState extends State<RewardsPage> {
           _isEmpty = false;
         }
       } else {
-        print('error');
       }
 
       setState(() {

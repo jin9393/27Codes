@@ -63,7 +63,6 @@ class QrScanPage extends StatelessWidget {
 
   Future<void> scanQRCode() async{
     String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#ff6666", "Cancel", false, ScanMode.QR);
-    print(barcodeScanRes);
   }
 
 }

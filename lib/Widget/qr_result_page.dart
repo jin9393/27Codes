@@ -308,9 +308,8 @@ class _QrResultPageState extends State<QrResultPage> {
     var responseData = await ApiCall().post(
         arg: arg,
         method: Constants.NETWORK_STORE_POINT,
-        header: requestHeaders);
-    print(responseData.message);
-    print(responseData);
+        header: requestHeaders,
+        context: context);
 
     if(responseData.code == 200){
       Navigator.pop(context);
@@ -334,9 +333,9 @@ class _QrResultPageState extends State<QrResultPage> {
     var responseData = await ApiCall().get(
         arg: requestHeaders,
         method: Constants.NETWORK_GET_QR_ORDER_DETAILS + widget.data.orderId,
-        header: requestHeaders);
-    print(responseData.message);
-    print(responseData);
+        header: requestHeaders,
+        context: context);
+
     List<Merchant> merchants = [];
 
     if (responseData.code == 200) {
@@ -344,7 +343,7 @@ class _QrResultPageState extends State<QrResultPage> {
       GetQrDetailsModel.fromJson(responseData.data['order']);
       returnData = model;
       _redeemPoint = model.use_point;
-      print(_redeemPoint);
+
       //   hmmm.data['sections'].forEach((mer) {
       //     mer['restorants'].forEach((res) {
       //       lists.add(MerchantModel.fromJson(res));
@@ -355,11 +354,9 @@ class _QrResultPageState extends State<QrResultPage> {
       //   _isError =false;
       //   // Iterable l = json.decode(hmmm.data['sections']['restorants']);
       //   // List<MerchantModel> posts =
-      //   print(merchants);
       // } else {
       //   _isLoading = false;
       //   _isError =true;
-      //   print('error');
       // }
       _isLoading = false;
       return returnData;

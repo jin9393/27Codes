@@ -36,7 +36,6 @@ class _HomeState extends State<home> {
     setState(() {
 
       // getdatafromserver();
-      // print ('done d $data');
       // getdatafromserver().whenComplete(() => print ('done d $returnData'));
       // returnData = ApiCall().post(method: 'method');
     });
@@ -121,7 +120,6 @@ class _HomeState extends State<home> {
     if(index != 2){
       lastClicked = index;
     }
-    print(index);
     _selectedIndex = index;
     _appBarKey.currentState?.animateTo(_selectedIndex);
     if (_selectedIndex == 2) {
@@ -158,18 +156,15 @@ class _HomeState extends State<home> {
   Future<void> scanQRCode() async {
     String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
         "#ff6666", "Cancel", false, ScanMode.QR);
-    print(barcodeScanRes);
 
     try {
       var result = QrResult.fromJson(jsonDecode(barcodeScanRes));
-      print(result);
       if (result.orderId.length != 0) {
         var returnResult = await Navigator.push(
             context,
             new MaterialPageRoute(
                 builder: (BuildContext context) =>
                     new QrResultPage(data: result)));
-        print(returnResult);
         if (returnResult) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("Successful payment"),

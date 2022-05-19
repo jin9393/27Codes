@@ -177,9 +177,8 @@ class _SignUpPageState extends State<SignUpPage> {
     var responseData = await ApiCall().post(
         arg: requestBody,
         method: Constants.NETWORK_REGISTER,
-        header: requestHeaders);
-    print(responseData.message);
-    print(responseData);
+        header: requestHeaders,
+        context: context);
 
     if (responseData.code == 200) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

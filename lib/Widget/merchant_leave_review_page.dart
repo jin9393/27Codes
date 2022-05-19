@@ -103,7 +103,6 @@ class _MerchantLeaveReviewState extends State<MerchantLeaveReviewPage> {
                                 ),
                                 onRatingUpdate: (rating) {
                                   finalRating = rating;
-                                  print(rating);
                                 },
                               ),
                             ],

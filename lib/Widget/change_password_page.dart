@@ -308,7 +308,6 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
                                 "Please make sure both new password match."),
                           ));
                         } else {
-                          print('inside change');
                           changePassword();
                         }
                       }
@@ -341,7 +340,6 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
   }
 
   checkForPassword(String password) {
-    print(password);
 
     RegExp capsRegex = RegExp(r'^(?=.*?[A-Z])');
     RegExp specialRegex = RegExp(r'^(?=.*?[!@#\-?/+$&*~])');
@@ -398,9 +396,9 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
     var responseData = await ApiCall().post(
         arg: requestBody,
         method: Constants.NETWORK_CHANGE_PASSWORD,
-        header: requestHeaders);
-    print(responseData.message);
-    print(responseData);
+        header: requestHeaders,
+        context: context);
+
     if (responseData.code == 200) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(responseData.message),

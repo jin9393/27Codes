@@ -619,7 +619,8 @@ class _MerchantDetailsState extends State<MerchantDetailsPage> {
       var responseData = await ApiCall().get(
           arg: requestHeaders,
           method: Constants.NETWORK_GET_VENDOR_ITEMS(widget.data.id),
-          header: requestHeaders);
+          header: requestHeaders,
+          context: context);
 
       merchants = [];
       if (responseData.code == 200) {

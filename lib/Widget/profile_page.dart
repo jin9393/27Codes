@@ -287,7 +287,6 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   getProfilePicture() async {
-    print('clicked');
 
     final ImagePicker _picker = ImagePicker();
     // Pick an image
@@ -322,9 +321,6 @@ class _ProfilePageState extends State<ProfilePage> {
     email = prefs.getString(Constants.PREF_EMAIL) ?? '';
     phoneNumber = prefs.getString(Constants.PREF_PHONE) ?? '';
 
-    print(name);
-    print(email);
-    print(phoneNumber);
   }
 
   logOut() async {
@@ -341,9 +337,8 @@ class _ProfilePageState extends State<ProfilePage> {
     var responseData = await ApiCall().post(
         arg: requestBody,
         method: Constants.NETWORK_LOGOUT,
-        header: requestHeaders);
-    print(responseData.message);
-    print(responseData);
+        header: requestHeaders,
+        context: context);
     if (responseData.code == 200) {
       prefs = await SharedPreferences.getInstance();
       prefs.setBool(Constants.PREF_LOGIN, false);

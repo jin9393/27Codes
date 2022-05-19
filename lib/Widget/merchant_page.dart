@@ -170,7 +170,7 @@ class _MerchantPageState extends State<MerchantPage> {
                                         MerchantCategoryGrid(
                                           data: "F&B",
                                           image:
-                                              'assets/images/appicon_f&b.png',
+                                              'assets/images/icon_f&b.png',
                                           maxLine: 1,
                                           fSize: 12,
                                           onTap: () => searchViaCategory('fnb'),
@@ -182,7 +182,7 @@ class _MerchantPageState extends State<MerchantPage> {
                                         MerchantCategoryGrid(
                                           data: "Auto",
                                           image:
-                                              'assets/images/appicon_auto.png',
+                                              'assets/images/icon_automotive.png',
                                           maxLine: 1,
                                           fSize: 12,
                                           onTap: () =>
@@ -195,7 +195,7 @@ class _MerchantPageState extends State<MerchantPage> {
                                         MerchantCategoryGrid(
                                           data: "Wellness",
                                           image:
-                                              'assets/images/appicon_wellness.png',
+                                              'assets/images/icon_wellness.png',
                                           maxLine: 1,
                                           fSize: 12,
                                           onTap: () =>
@@ -208,7 +208,7 @@ class _MerchantPageState extends State<MerchantPage> {
                                         MerchantCategoryGrid(
                                           data: "Leisure",
                                           image:
-                                              'assets/images/appicon_leisure.png',
+                                              'assets/images/icon_leisure.png',
                                           maxLine: 1,
                                           fSize: 12,
                                           onTap: () =>
@@ -221,7 +221,7 @@ class _MerchantPageState extends State<MerchantPage> {
                                         MerchantCategoryGrid(
                                           data: "Fashion",
                                           image:
-                                              'assets/images/appicon_fashion.png',
+                                              'assets/images/icon_fashion.png',
                                           maxLine: 1,
                                           fSize: 12,
                                           onTap: () =>
@@ -249,7 +249,7 @@ class _MerchantPageState extends State<MerchantPage> {
                                         MerchantCategoryGrid(
                                           data: "Grocery",
                                           image:
-                                              'assets/images/appicon_grocery.png',
+                                              'assets/images/icon_grocery.png',
                                           maxLine: 1,
                                           fSize: 12,
                                           onTap: () =>
@@ -262,7 +262,7 @@ class _MerchantPageState extends State<MerchantPage> {
                                         MerchantCategoryGrid(
                                           data: "Stalls",
                                           image:
-                                              'assets/images/appicon_stall.png',
+                                              'assets/images/icon_stalls.png',
                                           maxLine: 1,
                                           fSize: 12,
                                           onTap: () =>
@@ -275,7 +275,7 @@ class _MerchantPageState extends State<MerchantPage> {
                                         MerchantCategoryGrid(
                                           data: "Service",
                                           image:
-                                              'assets/images/appicon_services.png',
+                                              'assets/images/icon_services.png',
                                           maxLine: 1,
                                           fSize: 12,
                                           onTap: () =>
@@ -288,7 +288,7 @@ class _MerchantPageState extends State<MerchantPage> {
                                         MerchantCategoryGrid(
                                           data: "Others",
                                           image:
-                                              'assets/images/appicon_others.png',
+                                              'assets/images/icon_others.png',
                                           maxLine: 1,
                                           fSize: 12,
                                           onTap: () =>
@@ -511,17 +511,15 @@ class _MerchantPageState extends State<MerchantPage> {
         searchParam = 'search=' + search;
       }
 
-      print(searchParam);
-
       var hmmm = await ApiCall().get(
           arg: requestHeaders,
           method: Constants.NETWORK_GET_VENDOR_LIST + searchParam,
-          header: requestHeaders);
+          header: requestHeaders,
+          context: context);
 
       List<Merchant> merchants = [];
 
       if (hmmm.code == 200) {
-        print(hmmm.data['sections']);
 
         hmmm.data['sections'].forEach((mer) {
           mer['restorants'].forEach((res) {
@@ -533,13 +531,10 @@ class _MerchantPageState extends State<MerchantPage> {
         _isError = false;
         // Iterable l = json.decode(hmmm.data['sections']['restorants']);
         // List<MerchantModel> posts =
-        print(merchants);
       } else {
         _isLoading = false;
         _isError = true;
-        print('error');
       }
-      print(lists.length);
 
       setState(() {
         lists = lists;
@@ -562,17 +557,15 @@ class _MerchantPageState extends State<MerchantPage> {
         searchParam = 'merchant_category=' + search;
       }
 
-      print(searchParam);
-
       var returnData = await ApiCall().get(
           arg: requestHeaders,
           method: Constants.NETWORK_GET_VENDOR_LIST + searchParam,
-          header: requestHeaders);
+          header: requestHeaders,
+          context: context);
 
       List<Merchant> merchants = [];
 
       if (returnData.code == 200) {
-        print(returnData.data['sections']);
 
         returnData.data['sections'].forEach((mer) {
           mer['restorants'].forEach((res) {
@@ -584,12 +577,10 @@ class _MerchantPageState extends State<MerchantPage> {
         _isError = false;
         // Iterable l = json.decode(hmmm.data['sections']['restorants']);
         // List<MerchantModel> posts =
-        print(merchants);
       } else {
         _isLoading = false;
         _isError = true;
       }
-      print(lists.length);
 
       setState(() {
         lists = lists;
@@ -614,7 +605,6 @@ class _MerchantPageState extends State<MerchantPage> {
   }
 
   searchViaCategory(String pass) async {
-    print(pass);
     if (pass == 'other') {
       setUpCategoryDialog();
     } else {

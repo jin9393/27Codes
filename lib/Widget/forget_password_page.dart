@@ -105,11 +105,23 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
       'email': email,
     };
 
-    var hmmm = await ApiCall().post(
+    var responseData = await ApiCall().post(
         arg: requestBody,
         method: Constants.NETWORK_FORGET_PASSWORD,
-        header: requestHeaders);
-    print(hmmm.message);
-    print(hmmm);
+        header: requestHeaders,
+        context: context);
+
+    if (responseData.code == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(responseData.message),
+      ));
+      Navigator.pop(context);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(responseData.message),
+      ));
+      // Navigator.pop(context);
+    }
+
   }
 }

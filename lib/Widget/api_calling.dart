@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:code_27/Utils/constants.dart';
-
+import 'package:flutter/cupertino.dart';
 import 'api_result.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'login_page.dart';
 
 class ApiCall {
 
@@ -13,27 +16,31 @@ class ApiCall {
   final String baseUrl = "https://developing27code.madxpanel.com/api/v1/client";
   final Dio _dio = Dio();
   late SharedPreferences prefs;
+  // late BuildContext context;
 
   Future<RestApiResult> get({
+    required BuildContext context,
     required String method,
     String token = '',
     Map<String, String> arg = const {},
     Map<String, String> header = const {},
   }) async {
-    return _call(method: method, token: token, arg: arg,header: header, getOrPost: 'get');
+    return _call(method: method, token: token, arg: arg,header: header, getOrPost: 'get',context: context);
   }
 
   Future<RestApiResult> post({
+    required BuildContext context,
     required String method,
     String token = '',
     Map<String, String> arg = const {},
     Map<String, String> header = const {},
   }) async {
-    return _call(method: method, token: token, arg: arg, getOrPost: 'post',header: header);
+    return _call(method: method, token: token, arg: arg, getOrPost: 'post',header: header,context: context);
   }
 
   Future<RestApiResult> _call({
 
+    required BuildContext context,
     required String method,
     String token = '',
     Map<String, String> arg = const {},
@@ -71,14 +78,32 @@ class ApiCall {
       } else {
         response = await _dio.get(url, queryParameters: arg,options: Options(headers: header));
       }
-      return _handleResponse(new Map<String, dynamic>.from(response.data));
+      print('here');
+      return _handleResponse(new Map<String, dynamic>.from(response.data),context);
     } catch (error) {
+      print('error');
+      print(error);
       return _handleError(error);
     }
   }
 
-  RestApiResult _handleResponse(Map<String, dynamic> map) {
+  RestApiResult _handleResponse(Map<String, dynamic> map,BuildContext context) {
     if (map['status'] == false) {
+      if(map['code']==400){
+
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(map['message']),
+        ));
+
+        prefs.setBool(Constants.PREF_LOGIN, false);
+        prefs.setString(Constants.PREF_TOKEN, '');
+        prefs.setString(Constants.PREF_ID, '');
+        prefs.setString(Constants.PREF_NAME, '');
+        prefs.setString(Constants.PREF_EMAIL, '');
+        prefs.setString(Constants.PREF_PHONE, '');
+
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
+      }
       return RestApiResult(
         status: false,
         code: map['code'],
