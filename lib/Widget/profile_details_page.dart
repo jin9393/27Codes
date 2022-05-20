@@ -5,6 +5,7 @@ import 'package:code_27/Widget/password_condition_text.dart';
 import 'package:code_27/Widget/text_button.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:code_27/Widget/api_calling.dart';
 import 'package:code_27/Utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -88,8 +89,7 @@ class _ProfileDetailsState extends State<ProfileDetailsPage> {
                           ),
                           GestureDetector(
                             onTap: (){
-                              // getProfilePicture();
-                              },
+                              getProfilePicture();},
                             child: Container(
                             child: CircleAvatar(
                               backgroundImage: AssetImage(
@@ -261,21 +261,21 @@ class _ProfileDetailsState extends State<ProfileDetailsPage> {
     }
   }
 
-  // getProfilePicture() async {
-  //   image_picker: ^0.8.5
-  //   final ImagePicker _picker = ImagePicker();
-  //   // Pick an image
-  //   final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-  //   // // Capture a photo
-  //   // final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
-  //   // // Pick a video
-  //   // final XFile? image = await _picker.pickVideo(source: ImageSource.gallery);
-  //   // // Capture a video
-  //   // final XFile? video = await _picker.pickVideo(source: ImageSource.camera);
-  //   // // Pick multiple images
-  //   // final List<XFile>? images = await _picker.pickMultiImage();
-  //   String path = image!.path;
-  // }
+  getProfilePicture() async {
+    // image_picker: ^0.8.5
+    final ImagePicker _picker = ImagePicker();
+    // Pick an image
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    // // Capture a photo
+    // final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+    // // Pick a video
+    // final XFile? image = await _picker.pickVideo(source: ImageSource.gallery);
+    // // Capture a video
+    // final XFile? video = await _picker.pickVideo(source: ImageSource.camera);
+    // // Pick multiple images
+    // final List<XFile>? images = await _picker.pickMultiImage();
+    String path = image!.path;
+  }
 
   addNumber(String number){
 
