@@ -78,11 +78,8 @@ class ApiCall {
       } else {
         response = await _dio.get(url, queryParameters: arg,options: Options(headers: header));
       }
-      print('here');
       return _handleResponse(new Map<String, dynamic>.from(response.data),context);
     } catch (error) {
-      print('error');
-      print(error);
       return _handleError(error);
     }
   }

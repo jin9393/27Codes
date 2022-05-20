@@ -237,7 +237,7 @@ class _MerchantPageState extends State<MerchantPage> {
                                         MerchantCategoryGrid(
                                           data: "IT",
                                           image:
-                                              'assets/images/appicon_IT-2.png',
+                                              'assets/images/icon_IT.png',
                                           maxLine: 1,
                                           fSize: 12,
                                           onTap: () => searchViaCategory('it'),
@@ -387,23 +387,23 @@ class _MerchantPageState extends State<MerchantPage> {
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Asian',
-        picture: 'assets/images/appicon_services.png'));
+        picture: 'assets/images/subicon_assian.png'));
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Western',
-        picture: 'assets/images/appicon_services.png'));
+        picture: 'assets/images/subicon_western.png'));
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Dessert',
-        picture: 'assets/images/appicon_services.png'));
+        picture: 'assets/images/subicon_dassert.png'));
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Beverage',
-        picture: 'assets/images/appicon_services.png'));
+        picture: 'assets/images/subicon_beverage.png'));
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Bistro',
-        picture: 'assets/images/appicon_services.png'));
+        picture: 'assets/images/subicon_bistro.png'));
 
     otherCategoryLists.add(OtherCategory(
         header: true,
@@ -412,27 +412,27 @@ class _MerchantPageState extends State<MerchantPage> {
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Hair',
-        picture: 'assets/images/appicon_services.png'));
+        picture: 'assets/images/subicon_hairCut.png'));
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Facial',
-        picture: 'assets/images/appicon_services.png'));
+        picture: 'assets/images/subicon_facial.png'));
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Aesthetic',
-        picture: 'assets/images/appicon_services.png'));
+        picture: 'assets/images/subicon_aesthetic.png'));
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Nail medi-pedi',
-        picture: 'assets/images/appicon_services.png'));
+        picture: 'assets/images/subicon_nailBeauty.png'));
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Eyelashes',
-        picture: 'assets/images/appicon_services.png'));
+        picture: 'assets/images/subicon_Eyelashes.png'));
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Embroidery',
-        picture: 'assets/images/appicon_services.png'));
+        picture: 'assets/images/subicon_Embroidery.png'));
 
     otherCategoryLists.add(OtherCategory(
         header: true,
@@ -441,15 +441,15 @@ class _MerchantPageState extends State<MerchantPage> {
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Wash',
-        picture: 'assets/images/appicon_auto.png'));
+        picture: 'assets/images/subicon_carWash.png'));
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Workshop',
-        picture: 'assets/images/appicon_auto.png'));
+        picture: 'assets/images/subicon_workShop.png'));
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Accessories',
-        picture: 'assets/images/appicon_auto.png'));
+        picture: 'assets/images/subicon_accesories.png'));
 
     otherCategoryLists.add(OtherCategory(
         header: true,
@@ -458,16 +458,16 @@ class _MerchantPageState extends State<MerchantPage> {
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Hotel',
-        picture: 'assets/images/appicon_services.png'));
+        picture: 'assets/images/subicon_hotel.png'));
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Theme park',
-        picture: 'assets/images/appicon_services.png'));
+        picture: 'assets/images/subicon_themePark.png'));
 
-    otherCategoryLists.add(OtherCategory(
-        header: true,
-        name: 'Retail',
-        picture: 'assets/images/appicon_services.png'));
+    // otherCategoryLists.add(OtherCategory(
+    //     header: true,
+    //     name: 'Retail',
+    //     picture: 'assets/images/appicon_services.png'));
 
     otherCategoryLists.add(OtherCategory(
         header: true,
@@ -476,7 +476,7 @@ class _MerchantPageState extends State<MerchantPage> {
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Maid cleaning',
-        picture: 'assets/images/appicon_services.png'));
+        picture: 'assets/images/subicon_maidCleaning.png'));
 
     otherCategoryLists.add(OtherCategory(
         header: true,
@@ -485,15 +485,15 @@ class _MerchantPageState extends State<MerchantPage> {
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Gym',
-        picture: 'assets/images/appicon_wellness.png'));
+        picture: 'assets/images/subicon_gym.png'));
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Yoga',
-        picture: 'assets/images/appicon_wellness.png'));
+        picture: 'assets/images/subicon_yoga.png'));
     otherCategoryLists.add(OtherCategory(
         header: false,
         name: 'Studio',
-        picture: 'assets/images/appicon_wellness.png'));
+        picture: 'assets/images/subicon_studio_dance.png'));
 
     otherCategoryLists.add(OtherCategory(
         header: true,
